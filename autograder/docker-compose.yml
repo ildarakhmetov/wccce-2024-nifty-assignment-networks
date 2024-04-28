@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  rockylinux:
+    build: .
+    image: gradescope/autograder-base:rocky-8
+    container_name: rocky_coursename_gradescope
+    volumes:
+      - .:/home/student
+    ports:
+      - "8000:8000" # Example port, change as needed

@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+
+mkdir /autograder/source/server
+mkdir /autograder/source/clients
+
+cp /autograder/submission/server/commands.c /autograder/source/server
+cp /autograder/submission/server/commands.h /autograder/source/server
+cp /autograder/submission/server/Makefile /autograder/source/server
+cp /autograder/submission/server/tcp_server.c /autograder/source/server
+# Copy any extra .c or .h files
+cp -f /autograder/submission/server/*.c /autograder/source/server
+cp -f /autograder/submission/server/*.h /autograder/source/server
+
+cp /autograder/submission/clients/tcp_client.c /autograder/source/clients
+cp /autograder/submission/clients/tcp_client.py /autograder/source/clients
+
+cd /autograder/source
+
+# If exists tcp_server_compilation_log.txt, remove it
+if [ -f "/autograder/source/server/tcp_server_compilation_log.txt" ]; then
+    rm /autograder/source/server/tcp_server_compilation_log.txt
+fi
+
+# If exists tcp_client_compilation_log.txt, remove it
+if [ -f "/autograder/source/clients/tcp_client_compilation_log.txt" ]; then
+    rm /autograder/source/clients/tcp_client_compilation_log.txt
+fi
+
+# If exists tcp_server, remove it
+if [ -f "/autograder/source/server/tcp_server" ]; then
+    rm /autograder/source/server/tcp_server
+fi
+
+# If exists tcp_server, remove it
+if [ -f "/autograder/source/clients/tcp_client" ]; then
+    rm /autograder/source/clients/tcp_client
+fi
+
+# making tcp_server
+cd /autograder/source/server
+make > tcp_server_compilation_log.txt 2>&1
+
+# compiling tcp_client.c
+cd /autograder/source/clients
+gcc -g -Wall -o tcp_client tcp_client.c > tcp_client_compilation_log.txt 2>&1
+
+python3 /autograder/source/run_tests.py
