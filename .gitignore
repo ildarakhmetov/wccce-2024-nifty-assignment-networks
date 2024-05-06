@@ -158,3 +158,8 @@ cython_debug/
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
+sample_solution/clients/tcp_client
+sample_solution/clients/TCPClient.class
+sample_solution/server/commands.o
+sample_solution/server/tcp_server
+sample_solution/server/tcp_server.o
